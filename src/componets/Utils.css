@@ -1,0 +1,45 @@
+.logo{
+    margin: 0px;
+    height: 150px;
+}
+
+.dropFiles{
+    border: 2px dashed grey;
+    border-radius: 15px;
+    height: 90%;
+    
+}
+
+.filelabel {
+    height: 40%;
+    margin: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed rgb(34, 53, 221);
+    border-radius: 15px;
+}
+
+.filelabel .title {
+    display: block;
+    font-size: 20px;
+    padding-bottom: 5px;
+}
+
+
+.filelabel:hover ,
+.filelabel:hover {
+    color: rgb(34, 53, 221);
+    background: #edeef0;
+}
+#FileInput{
+    display:none;
+    cursor: not-allowed;
+}
+
+
+
+
+
