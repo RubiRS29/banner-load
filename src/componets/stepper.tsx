@@ -6,17 +6,19 @@ import { ReactElement } from 'react';
 import { FiUser, FiClipboard, FiDollarSign } from 'react-icons/fi';
 import { Success } from './done-component';
 import { FormBanners } from './form';
+import Review from './review-component/review';
 import './Utils.css';
 
 const steps = [
     { label: "Step 1", Content: FormBanners, icon: FiUser },
-    { label: "Step 2", Content: Success ,icon: FiClipboard },
+    { label: "Step 2", Content: Review, icon: FiDollarSign },
     { label: "Step 3", Content: FormBanners, icon: FiDollarSign },
+    { label: "Step 4", Content: Success ,icon: FiClipboard }
 ];
 
 
 
-export const StepsExample = () => {
+export const StepsMain = () => {
 
     const { nextStep, prevStep, reset, activeStep } = useSteps({
         initialStep: 0,

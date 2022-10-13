@@ -35,9 +35,11 @@ export const FormBanners = () => {
 
         let filesArray: FileModel[] = [];
 
-        const exten = ["css", "png", "html"]
+        const exten = ["css", "png", "html", "txt"]
 
         const extenFiles: String[] = [];
+
+        const popMessage = document.getElementById("pop-message");
 
         let message = "These files are missing: ";
 
@@ -46,14 +48,25 @@ export const FormBanners = () => {
         if (fileInput) {
             const filesArr = Array.from(fileInput.files || [])
 
+            if (value == "Customer") {
 
-            if (filesArr.length > 3 || files.length >= 3) {
-                const popMessage = document.getElementById("pop-message");
+                if (filesArr.length > 2 || files.length >= 2) {
 
-                popMessage?.removeAttribute("hidden");
-                setMessage("Just can be 3 files");
-                return;
-            }
+                    popMessage?.removeAttribute("hidden");
+                    setMessage("Just can be 2 files");
+                    return;
+                }
+
+            } else if (value == "DYI") {
+                if (filesArr.length > 4 || files.length >= 4) {
+
+                    popMessage?.removeAttribute("hidden");
+                    setMessage("Just can be 4 files");
+                    return;
+                }
+
+            } 
+
 
             let count = files.length == 0 ? 0 : files.at(-1)?.id;
 
@@ -74,6 +87,7 @@ export const FormBanners = () => {
 
             });
 
+
             if (files.length > 0) {
 
                 files.forEach(file => {
@@ -87,7 +101,7 @@ export const FormBanners = () => {
             });
 
 
-            if(extenFiles.sort() != exten.sort()) {
+            if (extenFiles.sort() != exten.sort()) {
 
                 const notIncludes = exten.filter(element => !extenFiles.includes(element))
 
@@ -97,13 +111,10 @@ export const FormBanners = () => {
 
                 popMessage?.removeAttribute("hidden");
                 setMessage(message);
-                
+
             }
 
-
             setFiles([...files, ...filesArray])
-
-            // console.log(files.length + " --- " + filesArray.length);
         }
 
     }
@@ -114,8 +125,6 @@ export const FormBanners = () => {
     }
 
     function deleteFile(id: number) {
-
-        console.log(files);
 
         const filteredFiles = files.filter((file) => file.id != id)
         setFiles(filteredFiles)
@@ -129,15 +138,17 @@ export const FormBanners = () => {
 
         if (value == "DYI") {
 
-            exte = '.css, .jpg, .png, .html';
+            exte += '.css, .png, .html';
 
             if (country == "ES_MX" || country == "EN_MX") {
-                exte += ', xlsx';
+                exte += ', xlsx, .txt';
             }
 
         } else if (value == "Customer") {
-            exte = '.jpg, .png';
+            exte += '.png';
         }
+
+        console.log(exte);
 
         return exte;
 

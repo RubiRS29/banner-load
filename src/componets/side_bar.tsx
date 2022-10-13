@@ -37,7 +37,8 @@ import {
 import { IconType } from 'react-icons';
 import { ReactText } from 'react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { StepsExample } from './stepper';
+import { StepsMain } from './stepper';
+import { Outlet } from 'react-router-dom';
 
 interface LinkItemProps {
     name: string;
@@ -77,7 +78,7 @@ export const MenuNav = () => {
             <MobileNav onOpen={onOpen} />
             <Box ml={{ base: 0, md: 60 }} p="2" >
                 <Box  bg={useColorModeValue('white', 'gray.900')} w='100%' p={4}  borderWidth='1px' borderRadius='lg' overflow='hidden'>
-                    <StepsExample />
+                    <Outlet />
                 </Box>
 
             </Box>
@@ -114,7 +115,6 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         </Box>
     );
 };
-
 
 interface NavItemProps extends FlexProps {
     icon: IconType;
