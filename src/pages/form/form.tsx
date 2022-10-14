@@ -10,6 +10,7 @@ import { FiCheckCircle, FiTrash2, FiUpload } from 'react-icons/fi';
 import { FileModel } from '../../models/fileModel';
 import { ButtonRadio } from '../../componets/button-radio';
 import { loadBanner } from './formApi';
+import moment from 'moment';
 
 
 export const FormBanners = () => {
@@ -103,9 +104,6 @@ export const FormBanners = () => {
 
     }
 
-    console.log(files.length);
-
-
     function validateFiles() {
 
         var exte: string = "";
@@ -163,13 +161,27 @@ export const FormBanners = () => {
 
 
     function changeDate(e: any) {
-        console.log(e.target.value);
-        setDate(e.target.value);
+        let date = moment(e.target.value).format('MM/DD/YYYY');
+
+        const day = new Date(date).getUTCDay();
+
+        if ([6, 0].includes(day)) {
+
+            e.preventDefault();
+            e.target.value = '';
+            
+
+        } else {
+
+            setDate(date);
+        }
+    
     }
 
     function bytesToMegaBytes(bytes: number) {
-        return  (bytes / (1024 ** 2)).toFixed(2);
+        return (bytes / (1024 ** 2)).toFixed(2);
     }
+
 
     return (
 
@@ -276,7 +288,7 @@ export const FormBanners = () => {
                                 </Thead>
                                 <Tbody >
 
-                                    {files.map(({ name, size, type}) => (
+                                    {files.map(({ name, size, type }) => (
 
                                         < Tr key={getExt(type.toString())} id={getExt(type.toString())} >
 
