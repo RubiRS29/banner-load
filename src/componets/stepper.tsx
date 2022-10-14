@@ -4,9 +4,9 @@ import { Flex, Heading, Button, Box, useColorModeValue, Divider} from '@chakra-u
 import { Step, Steps, useSteps } from "chakra-ui-steps"
 import { ReactElement } from 'react';
 import { FiUser, FiClipboard, FiDollarSign } from 'react-icons/fi';
-import { Success } from './done-component';
-import { FormBanners } from './form';
-import Review from './review-component/review';
+import { Success } from '../pages/success/done-component';
+import { FormBanners } from '../pages/form/form';
+import Review from '../pages/review/review';
 import './Utils.css';
 
 const steps = [
@@ -15,8 +15,6 @@ const steps = [
     { label: "Step 3", Content: FormBanners, icon: FiDollarSign },
     { label: "Step 4", Content: Success ,icon: FiClipboard }
 ];
-
-
 
 export const StepsMain = () => {
 
