@@ -37,19 +37,20 @@ import {
 import { IconType } from 'react-icons';
 import { ReactText } from 'react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { StepsMain } from './stepper';
 import { Outlet } from 'react-router-dom';
+import { StepperProvider } from '../provider/StepperProvider';
 
 interface LinkItemProps {
     name: string;
+    url: string;
     icon: IconType;
 }
 const LinkItems: Array<LinkItemProps> = [
-    { name: 'Home', icon: FiHome },
-    { name: 'Load', icon: FiDownloadCloud },
-    { name: 'Progress', icon: FiCheckSquare },
-    { name: 'Schedule', icon: FiCalendar },
-    { name: 'Settings', icon: FiSettings },
+    { name: 'Home', url: '/', icon: FiHome },
+    { name: 'Load', url: '/schedule', icon: FiDownloadCloud },
+    { name: 'Progress', url: '/schedule', icon: FiCheckSquare },
+    { name: 'Schedule', url: '/schedule', icon: FiCalendar },
+    { name: 'Settings', url: '/schedule', icon: FiSettings },
 ];
 
 export const MenuNav = () => {
@@ -77,8 +78,11 @@ export const MenuNav = () => {
             {/* mobilenav */}
             <MobileNav onOpen={onOpen} />
             <Box ml={{ base: 0, md: 60 }} p="2" >
-                <Box  bg={useColorModeValue('white', 'gray.900')} w='100%' p={4}  borderWidth='1px' borderRadius='lg' overflow='hidden'>
-                    <Outlet />
+                <Box bg={useColorModeValue('white', 'gray.900')} w='100%' p={4} borderWidth='1px' borderRadius='lg' overflow='hidden'>
+                    <StepperProvider>
+                        <Outlet />
+                    </StepperProvider>
+
                 </Box>
 
             </Box>
@@ -108,7 +112,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                 <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
             </Flex>
             {LinkItems.map((link) => (
-                <NavItem key={link.name} icon={link.icon}>
+                <NavItem key={link.name} icon={link.icon} url={link.url}>
                     {link.name}
                 </NavItem>
             ))}
@@ -119,11 +123,12 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 interface NavItemProps extends FlexProps {
     icon: IconType;
     children: ReactText;
+    url: string;
 }
 
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, children, url, ...rest }: NavItemProps) => {
     return (
-        <Link href="#" style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
+        <Link href={url} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
             <Flex
                 align="center"
                 p="4"

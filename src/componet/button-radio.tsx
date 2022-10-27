@@ -4,8 +4,6 @@ import { render } from "react-dom"
 
 // 1. Create a component that consumes the `useRadio` hook
 
-
-
 function RadioCard(props:any) {
 
 
@@ -45,7 +43,6 @@ export const ButtonRadio = ({handleChange} :any) => {
     
     const { getRootProps, getRadioProps } = useRadioGroup({
         name: 'location',
-        defaultValue: 'botton',
         onChange: handleChange
         
     })

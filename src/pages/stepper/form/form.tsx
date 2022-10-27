@@ -2,19 +2,16 @@ import { AttachmentIcon, InfoIcon } from '@chakra-ui/icons';
 import {
     Box, FormLabel, Input, Select, Radio, RadioGroup, Stack, Table,
     TableContainer, Tbody, Td, Th, Thead, Tr, SimpleGrid, useColorModeValue,
-    Button, IconButton, Tooltip, Flex, Spacer, VStack
+    IconButton, Tooltip, Flex, Spacer, FormErrorMessage
 }
     from '@chakra-ui/react';
 import React from 'react';
-import { FiCheckCircle, FiTrash2, FiUpload } from 'react-icons/fi';
-import { FileModel } from '../../models/fileModel';
-import { ButtonRadio } from '../../componets/button-radio';
-import { loadBanner } from './formApi';
+import { FiCheckCircle, FiTrash2 } from 'react-icons/fi';
+import { ButtonRadio } from '../../../componet/button-radio';
 import moment from 'moment';
-
+import { LoadBanner } from '../../../hook/LoadBanner';
 
 export const FormBanners = () => {
-
 
     const [files, setFiles] = React.useState<File[]>([]);
     const [value, setValue] = React.useState('DYI');
@@ -22,6 +19,9 @@ export const FormBanners = () => {
     const [country, setCountry] = React.useState('');
     const [date, setDate] = React.useState('');
     const [messageError, setMessage] = React.useState('');
+
+    //context hook custom
+    const { formDataBanner } = LoadBanner();
 
     const options = [
         { value: 'ES_MX', label: 'ES_MX' },
@@ -35,14 +35,11 @@ export const FormBanners = () => {
     function handleChangeEvent(e: any) {
 
         const fileInput = e.target as HTMLInputElement | null;
-        const exten = ["css", "png", "html", "txt"]
+        const exten = [" css", " png", " html", " txt"]
         const extenFiles: String[] = [];
         const popMessage = document.getElementById("pop-message");
         let filesArray: File[] = [];
-
         let message = "These files are missing: ";
-
-        const bytesToMegaBytes = (bytes: number) => (bytes / (1024 ** 2)).toFixed(2);
 
         if (fileInput) {
 
@@ -68,41 +65,66 @@ export const FormBanners = () => {
             }
 
             filesArr.forEach(file => {
-
                 filesArray.push(file);
-
             });
 
 
             if (files.length > 0) {
                 files.forEach(file => {
-                    extenFiles.push(file.type);
+
+                    extenFiles.push(getExt(file.name));
                 });
 
             }
 
             filesArray.forEach(file => {
-                extenFiles.push(file.type);
+                extenFiles.push(getExt(file.name));
             });
 
 
-            if (extenFiles.sort() != exten.sort()) {
+            // if (extenFiles.sort() != exten.sort()) {
 
-                const notIncludes = exten.filter(element => !extenFiles.includes(element))
+            //     console.log(extenFiles)
 
-                message += notIncludes.toString()
+            //     const notIncludes = exten.filter(element => !extenFiles.includes(element))
 
-                const popMessage = document.getElementById("pop-message");
+            //     message += notIncludes.toString()
 
-                popMessage?.removeAttribute("hidden");
-                setMessage(message);
+            //     const popMessage = document.getElementById("pop-message");
 
-            }
+            //     popMessage?.removeAttribute("hidden");
+            //     setMessage(message);
 
-            setFiles([...files, ...filesArray])
+            // }
+
+
+
+            setFiles([...files, ...filesArray]);
+
+            let filesLoad: File[] = Array.from([...files, ...filesArray]);
+
+
+            const valuesFiles = [...formDataBanner.keys()];
+
+            valuesFiles.forEach(value => {
+                if (value.includes("files-")) {
+                    formDataBanner.delete(value);
+                }
+            })
+
+
+            filesLoad.forEach(file => {
+                formDataBanner.append(`files-${getExt(file.name)}`, file)
+                if (getExt(file.name) == "jpg" || getExt(file.name) == "png") {
+                    formDataBanner.append(`files-${getExt(file.name)}`, file)
+                    toBase(file)
+                }
+                
+            })
+
         }
-
     }
+
 
     function validateFiles() {
 
@@ -110,57 +132,55 @@ export const FormBanners = () => {
 
         if (value == "DYI") {
 
-            exte += '.css, .png, .html';
+            exte += '.css, .png, .html, .jpg';
 
             if (country == "ES_MX" || country == "EN_MX") {
                 exte += ', xlsx, .txt';
             }
 
         } else if (value == "Customer") {
-            exte += '.png';
+            exte += '.png, .jpg';
         }
 
         return exte;
 
     }
 
-    const load = async () => {
-        const formData: FormData = new FormData();
+    function toBase(file: any) {
+        let fileBase: string | ArrayBuffer | null = "";
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+    
+        reader.onload = function () {
+          //me.modelvalue = reader.result;
+          fileBase = reader.result;
+          
+          formDataBanner.append("image", fileBase as string);
 
-        console.log(files.length);
-
-        files.forEach(file => {
-            formData.append("files", file)
-        });
-
-
-        formData.append("mode", value);
-        formData.append("position", position);
-        formData.append("country", country);
-        formData.append("date", date)
-
-        console.log(formData.getAll("files"));
-        console.log(formData.get("mode"));
-        console.log(formData.get("position"));
-        console.log(formData.get("country"));
-        console.log(formData.get("date"));
-
-        // await loadBanner(formData);
+        };
+    
+        reader.onerror = function (error) {
+          console.log('Error: ', error);
+        };
     }
 
     // ultis 
     function deleteFile(ext: string) {
-        const filteredFiles = files.filter((file) => getExt(file.type) != ext)
-        setFiles(filteredFiles)
 
+        ext = getExt(ext);
+        const filteredFiles = files.filter((file) => getExt(file.name) != ext)
+        formDataBanner.delete(`files-${ext}`)
+
+        setFiles(filteredFiles)
     }
 
     function getExt(word: string) {
+
         return word.substring(word.lastIndexOf('.') + 1)
     }
 
-
     function changeDate(e: any) {
+
         let date = moment(e.target.value).format('MM/DD/YYYY');
 
         const day = new Date(date).getUTCDay();
@@ -169,19 +189,18 @@ export const FormBanners = () => {
 
             e.preventDefault();
             e.target.value = '';
-            
 
         } else {
 
             setDate(date);
+            formDataBanner.set("date", date)
         }
-    
+
     }
 
     function bytesToMegaBytes(bytes: number) {
         return (bytes / (1024 ** 2)).toFixed(2);
     }
-
 
     return (
 
@@ -191,8 +210,10 @@ export const FormBanners = () => {
                 <Box mt={5}>
                     <FormLabel mb={5}>Position</FormLabel>
                     <ButtonRadio handleChange={(e: any) => {
-                        setPosition(e);
+                        formDataBanner.set("position", e);
+
                     }} />
+
                 </Box >
 
 
@@ -201,9 +222,10 @@ export const FormBanners = () => {
                     <Box mt={5}>
 
                         <Select placeholder='Select country' onChange={(e: any) => {
-                            console.log(e.target.value);
                             setCountry(e.target.value)
+                            formDataBanner.set("country", e.target.value);
                         }}>
+
                             {options.map(({ value, label }) => (
                                 <option key={value} value={value}>{label}</option>
                             ))}
@@ -220,16 +242,26 @@ export const FormBanners = () => {
                         type="date"
                         onChange={changeDate}
                     />
+
+                    <FormErrorMessage>{messageError}</FormErrorMessage>
                 </Box >
 
                 <Box mt={5} >
                     <FormLabel>Mode</FormLabel>
-                    <RadioGroup onChange={setValue} value={value} mt={5}>
+
+                    <RadioGroup onChange={(e: any) => {
+
+                        setValue(e)
+                        formDataBanner.set("mode", e);
+
+                    }} mt={5}>
+
                         <Stack direction='row' className='mode-ra'>
                             <Radio size='lg' value='DYI' mr={5}>DYI</Radio>
                             <Radio size='lg' value='Customer'>Customer</Radio>
                         </Stack>
                     </RadioGroup>
+
                 </Box >
             </Box>
 
@@ -293,7 +325,7 @@ export const FormBanners = () => {
                                         < Tr key={getExt(type.toString())} id={getExt(type.toString())} >
 
                                             <Td>{name.slice(0, 20)}</Td>
-                                            <Td >{getExt(type)}</Td>
+                                            <Td >{getExt(name)}</Td>
                                             <Td>{bytesToMegaBytes(size)}/mb </Td>
 
                                             <Td p={1}>
@@ -311,7 +343,7 @@ export const FormBanners = () => {
                                                     aria-label='Search database'
                                                     icon={<FiTrash2 />}
 
-                                                    onClick={() => deleteFile(type.toString())}
+                                                    onClick={() => deleteFile(name.toString())}
                                                     color='red'
                                                     size='lg'
                                                 />
@@ -328,13 +360,7 @@ export const FormBanners = () => {
 
                     </Box>
 
-                    <VStack spacing='30px' align='right'>
 
-                        <Button leftIcon={<FiUpload />} colorScheme='orange' variant='solid' mt={5} onClick={load}>
-
-                            Load Banner
-                        </Button>
-                    </VStack>
                 </Box>
 
             </Box >
@@ -344,3 +370,5 @@ export const FormBanners = () => {
     )
 
 }
+
+export default FormBanners;

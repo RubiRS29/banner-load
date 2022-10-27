@@ -9,13 +9,12 @@ import {
   Grid,
   extendTheme,
 } from "@chakra-ui/react"
-import { ColorModeSwitcher } from "./ColorModeSwitcher"
-import { Logo } from "./Logo"
-import { MenuNav } from "./componets/side_bar"
+import { MenuNav } from "./componet/side_bar"
 
 import { StepsStyleConfig as Steps } from 'chakra-ui-steps';
 import { Route, BrowserRouter, Routes, useRoutes } from "react-router-dom"
-import { StepsMain } from "./componets/stepper"
+import { StepsMain } from "./pages/stepper/stepper"
+import { ScheduleCom } from "./pages/schedule/schedule"
 
 const theme = extendTheme({
   components: {
@@ -50,6 +49,7 @@ export const App = () => {
           <Route  path="/" element={<MenuNav />} >
 
             <Route path="/" element={<StepsMain />} />
+            <Route path="/schedule" element={<ScheduleCom />} />
           </Route>
         </Routes>
 

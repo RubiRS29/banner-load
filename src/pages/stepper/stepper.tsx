@@ -1,19 +1,20 @@
 
-import { Flex, Heading, Button, Box, useColorModeValue, Divider} from '@chakra-ui/react';
+import { Flex, Heading, Button, Box } from '@chakra-ui/react';
 
 import { Step, Steps, useSteps } from "chakra-ui-steps"
-import { ReactElement } from 'react';
 import { FiUser, FiClipboard, FiDollarSign } from 'react-icons/fi';
-import { Success } from '../pages/success/done-component';
-import { FormBanners } from '../pages/form/form';
-import Review from '../pages/review/review';
+import { Success } from './success/done-component';
+import { FormBanners } from './form/form';
+import Review from './review/review';
 import './Utils.css';
+import { LoadBanner } from '../../hook/LoadBanner';
+import {loadBannerApi } from './form/formApi'
+import { LoadBannerModelState } from '../../models/LoadBannerModelState';
 
 const steps = [
     { label: "Step 1", Content: FormBanners, icon: FiUser },
-    { label: "Step 2", Content: Review, icon: FiDollarSign },
     { label: "Step 3", Content: FormBanners, icon: FiDollarSign },
-    { label: "Step 4", Content: Success ,icon: FiClipboard }
+    { label: "Step 4", Content: Success, icon: FiClipboard }
 ];
 
 export const StepsMain = () => {
@@ -22,21 +23,37 @@ export const StepsMain = () => {
         initialStep: 0,
     })
 
+    const { formDataBanner, loadBanner } = LoadBanner();
+
+    const load = async () => {
+        await loadBannerApi(formDataBanner);
+    }
+
+
     return (
         <Flex flexDir="column" width="100%">
+
             <Steps activeStep={activeStep}>
-            
+
                 {steps.map(({ label, icon, Content }) => (
-                    
+
                     <Step label={label} key={label} icon={icon} >
-                        
+
+
                         <Box bg='white' w='100%' m={2} overflow='hidden'>
-                            <Content /> 
+
+                            {activeStep === 1 ?
+
+                                (<Review />) :
+
+                                (<Content />)
+                            }
                         </Box>
+
                     </Step>
                 ))}
             </Steps>
-            
+
             {activeStep === steps.length ? (
                 <Flex px={4} py={4} width="100%" flexDirection="column">
                     <Heading fontSize="xl" textAlign="center">
@@ -48,6 +65,7 @@ export const StepsMain = () => {
                 </Flex>
             ) : (
                 <Flex width="100%" justify="flex-end">
+
                     <Button
                         isDisabled={activeStep === 0}
                         mr={4}
@@ -57,9 +75,17 @@ export const StepsMain = () => {
                     >
                         Prev
                     </Button>
-                    <Button size="sm" onClick={nextStep}>
-                        {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                    </Button>
+
+                    {activeStep === 1 ?
+                        (<Button size="sm" onClick={load}>
+                            {activeStep === steps.length - 1 ? "affff" : "Load"}
+                        </Button>) :
+
+                        <Button size="sm" onClick={nextStep}>
+                            {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                        </Button>
+                    }
+
                 </Flex>
             )}
         </Flex>
