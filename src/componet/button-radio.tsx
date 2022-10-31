@@ -39,7 +39,7 @@ function RadioCard(props:any) {
 }
 // Step 2: Use the `useRadioGroup` hook to control a group of custom radios.
 export const ButtonRadio = ({handleChange} :any) => {
-    const options = ['botton', 'top', 'center']
+    const options = ['bottom', 'top', 'center']
     
     const { getRootProps, getRadioProps } = useRadioGroup({
         name: 'location',

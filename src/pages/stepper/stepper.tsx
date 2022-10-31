@@ -9,7 +9,6 @@ import Review from './review/review';
 import './Utils.css';
 import { LoadBanner } from '../../hook/LoadBanner';
 import {loadBannerApi } from './form/formApi'
-import { LoadBannerModelState } from '../../models/LoadBannerModelState';
 
 const steps = [
     { label: "Step 1", Content: FormBanners, icon: FiUser },
@@ -23,7 +22,9 @@ export const StepsMain = () => {
         initialStep: 0,
     })
 
-    const { formDataBanner, loadBanner } = LoadBanner();
+    const { formDataBanner } = LoadBanner();
+
+    
 
     const load = async () => {
         await loadBannerApi(formDataBanner);

@@ -12,11 +12,12 @@ import {
   Box,
   VStack,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { ReactElement } from 'react';
 import { FiAlignCenter, FiCalendar, FiGrid, FiTag } from 'react-icons/fi';
 import { LoadBanner } from '../../../hook/LoadBanner';
+import { getExt } from '../../../utils/utils';
 
 interface FeatureProps {
   field: string;
@@ -48,20 +49,37 @@ const Feature = ({ field, icon, iconBg, text }: FeatureProps) => {
 
 export default function Review() {
 
-  const [image, setImage] = React.useState<string | ArrayBuffer | null>("");
-
   const { formDataBanner } = LoadBanner();
 
-  console.log("from review");
+  const [img, seImage] = React.useState('');
 
   let position = formDataBanner.get('position')?.toString() || '';
   let country = formDataBanner.get('country')?.toString() || '';
   let date = formDataBanner.get('date')?.toString() || '';
   let mode = formDataBanner.get('mode')?.toString() || '';
-  let filesPng = formDataBanner.get('files-png') ? formDataBanner.get('files-png') : formDataBanner.get('files-jpg');
-  let img = formDataBanner.get('image');
 
-  console.log(filesPng);
+  const files = [...formDataBanner.getAll("files")];
+
+  const image = files.filter(file => {
+    file = file as File;
+    return getExt(file.name) == "jpg" || "png" ? file : "";
+  })
+
+  
+  let fileBase: string | ArrayBuffer | null = "";
+  let reader = new FileReader();
+
+  reader.readAsDataURL(image[0] as File);
+
+  reader.onload = function () {
+    fileBase = reader.result;
+    seImage(fileBase as string)
+
+  };
+
+  reader.onerror = function (error) {
+    console.log('Error: ', error);
+  };
 
 
   return (
@@ -94,23 +112,22 @@ export default function Review() {
               <Icon as={FiGrid} color={'yellow.500'} w={5} h={5} />
             }
             iconBg={useColorModeValue('yellow.100', 'yellow.900')}
-            text={position}
             field={'Position'}
+            text={position}
           />
           <Feature
             icon={<Icon as={FiTag} color={'green.500'} w={5} h={5} />}
             iconBg={useColorModeValue('green.100', 'green.900')}
-            field={mode}
-            text={'Mode'}
+            field={'Mode'}
+            text={mode}
           />
           <Feature
             icon={
               <Icon as={FiAlignCenter} color={'purple.500'} w={5} h={5} />
             }
             iconBg={useColorModeValue('purple.100', 'purple.900')}
-            text={country}
             field={'Languaje'}
-
+            text={country}
 
           />
           <Feature
@@ -139,9 +156,9 @@ export default function Review() {
         </Box>
 
         <Box >
-          2
+          
         </Box>
-        
+
       </VStack>
 
     </SimpleGrid>

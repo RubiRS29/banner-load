@@ -10,6 +10,7 @@ import { FiCheckCircle, FiTrash2 } from 'react-icons/fi';
 import { ButtonRadio } from '../../../componet/button-radio';
 import moment from 'moment';
 import { LoadBanner } from '../../../hook/LoadBanner';
+import { getExt } from '../../../utils/utils';
 
 export const FormBanners = () => {
 
@@ -24,12 +25,10 @@ export const FormBanners = () => {
     const { formDataBanner } = LoadBanner();
 
     const options = [
-        { value: 'ES_MX', label: 'ES_MX' },
-        { value: 'EN_MX', label: 'EN_MX' },
-        { value: 'ES_US', label: 'ES_US' },
-        { value: 'EN_US', label: 'EN_US' },
-        { value: 'BR', label: 'BR' },
-        { value: 'PT', label: 'PT' },
+        { value: 'es_MX', label: 'es_MX' },
+        { value: 'en_MX', label: 'en_MX' },
+        { value: 'es_US', label: 'es_US' },
+        { value: 'en_US', label: 'en_US' }
     ]
 
     function handleChangeEvent(e: any) {
@@ -107,24 +106,19 @@ export const FormBanners = () => {
             const valuesFiles = [...formDataBanner.keys()];
 
             valuesFiles.forEach(value => {
-                if (value.includes("files-")) {
+                if (value.includes("files")) {
                     formDataBanner.delete(value);
                 }
             })
 
 
             filesLoad.forEach(file => {
-                formDataBanner.append(`files-${getExt(file.name)}`, file)
-                if (getExt(file.name) == "jpg" || getExt(file.name) == "png") {
-                    formDataBanner.append(`files-${getExt(file.name)}`, file)
-                    toBase(file)
-                }
-                
+                formDataBanner.append("files", file)
+
             })
 
         }
     }
-
 
     function validateFiles() {
 
@@ -134,11 +128,11 @@ export const FormBanners = () => {
 
             exte += '.css, .png, .html, .jpg';
 
-            if (country == "ES_MX" || country == "EN_MX") {
+            if (country == "es_MX" || country == "en_MX") {
                 exte += ', xlsx, .txt';
             }
 
-        } else if (value == "Customer") {
+        } else if (value == "Commercial") {
             exte += '.png, .jpg';
         }
 
@@ -146,37 +140,18 @@ export const FormBanners = () => {
 
     }
 
-    function toBase(file: any) {
-        let fileBase: string | ArrayBuffer | null = "";
-        let reader = new FileReader();
-        reader.readAsDataURL(file);
-    
-        reader.onload = function () {
-          //me.modelvalue = reader.result;
-          fileBase = reader.result;
-          
-          formDataBanner.append("image", fileBase as string);
-
-        };
-    
-        reader.onerror = function (error) {
-          console.log('Error: ', error);
-        };
-    }
-
     // ultis 
     function deleteFile(ext: string) {
 
         ext = getExt(ext);
         const filteredFiles = files.filter((file) => getExt(file.name) != ext)
-        formDataBanner.delete(`files-${ext}`)
+
+        formDataBanner.delete("files");
+
+        filteredFiles.forEach(file => formDataBanner.append("files", file));
+
 
         setFiles(filteredFiles)
-    }
-
-    function getExt(word: string) {
-
-        return word.substring(word.lastIndexOf('.') + 1)
     }
 
     function changeDate(e: any) {
@@ -258,7 +233,7 @@ export const FormBanners = () => {
 
                         <Stack direction='row' className='mode-ra'>
                             <Radio size='lg' value='DYI' mr={5}>DYI</Radio>
-                            <Radio size='lg' value='Customer'>Customer</Radio>
+                            <Radio size='lg' value='Commercial'>Customer</Radio>
                         </Stack>
                     </RadioGroup>
 
