@@ -1,5 +1,5 @@
 
-import { Flex, Heading, Button, Box } from '@chakra-ui/react';
+import { Flex, Heading, Button, Box, useToast } from '@chakra-ui/react';
 
 import { Step, Steps, useSteps } from "chakra-ui-steps"
 import { FiUser, FiClipboard, FiDollarSign } from 'react-icons/fi';
@@ -8,7 +8,9 @@ import { FormBanners } from './form/form';
 import Review from './review/review';
 import './Utils.css';
 import { LoadBanner } from '../../hook/LoadBanner';
-import {loadBannerApi } from './form/formApi'
+import { loadBannerApi } from './form/formApi'
+import React from 'react';
+
 
 const steps = [
     { label: "Step 1", Content: FormBanners, icon: FiUser },
@@ -18,18 +20,35 @@ const steps = [
 
 export const StepsMain = () => {
 
+    const { formDataBanner, notIncludes } = LoadBanner();
+    const fieldsName =  ["mode", "date", "position", "country", "files"]
+    
     const { nextStep, prevStep, reset, activeStep } = useSteps({
         initialStep: 0,
     })
+    const toast = useToast()
 
-    const { formDataBanner } = LoadBanner();
-
-    
 
     const load = async () => {
         await loadBannerApi(formDataBanner);
     }
 
+    const validateFields = () => {
+
+        const fieldsKeys = [...formDataBanner.keys()];
+        const notIncludesFields = fieldsName.filter(element => !fieldsKeys.includes(element));
+
+        console.log(notIncludes.length);
+
+        return toast({
+            title: 'Error, fields are missing',
+            description: `Some fields are missing ${notIncludesFields.toString()}`,
+            position: 'top-right',
+            status: 'error',
+            duration: 8000,
+            isClosable: true,
+        })
+    }
 
     return (
         <Flex flexDir="column" width="100%">
@@ -82,7 +101,8 @@ export const StepsMain = () => {
                             {activeStep === steps.length - 1 ? "affff" : "Load"}
                         </Button>) :
 
-                        <Button size="sm" onClick={nextStep}>
+                        <Button size="sm" onClick={notIncludes.length != 5 ? validateFields : nextStep}>
+                            {notIncludes.length}
                             {activeStep === steps.length - 1 ? "Finish" : "Next"}
                         </Button>
                     }

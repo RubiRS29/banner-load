@@ -2,12 +2,14 @@ export class LoadBannerModelState {
 
     formData: FormData;
     status: string;
-    image: string | ArrayBuffer | null;
+    notIncludes: String[];
   
-    constructor( formData: FormData, status: string, image: string | ArrayBuffer | null ) {
+    constructor( formData: FormData, 
+      status: string, 
+      image: String[] ) {
       this.formData = formData;
       this.status = status;
-      this.image = image;
+      this.notIncludes = image;
     }
   
   }

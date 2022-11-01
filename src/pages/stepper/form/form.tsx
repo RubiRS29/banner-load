@@ -22,7 +22,7 @@ export const FormBanners = () => {
     const [messageError, setMessage] = React.useState('');
 
     //context hook custom
-    const { formDataBanner } = LoadBanner();
+    const { formDataBanner, notIncludes } = LoadBanner();
 
     const options = [
         { value: 'es_MX', label: 'es_MX' },
@@ -114,9 +114,10 @@ export const FormBanners = () => {
 
             filesLoad.forEach(file => {
                 formDataBanner.append("files", file)
-
             })
-
+            if(!notIncludes.includes("files")){
+                notIncludes.push("files")
+            }
         }
     }
 
@@ -169,6 +170,7 @@ export const FormBanners = () => {
 
             setDate(date);
             formDataBanner.set("date", date)
+            notIncludes.push("date")
         }
 
     }
@@ -186,6 +188,7 @@ export const FormBanners = () => {
                     <FormLabel mb={5}>Position</FormLabel>
                     <ButtonRadio handleChange={(e: any) => {
                         formDataBanner.set("position", e);
+                        notIncludes.push("position")
 
                     }} />
 
@@ -199,6 +202,7 @@ export const FormBanners = () => {
                         <Select placeholder='Select country' onChange={(e: any) => {
                             setCountry(e.target.value)
                             formDataBanner.set("country", e.target.value);
+                            notIncludes.push("country")
                         }}>
 
                             {options.map(({ value, label }) => (
@@ -228,6 +232,7 @@ export const FormBanners = () => {
 
                         setValue(e)
                         formDataBanner.set("mode", e);
+                        notIncludes.push("mode")
 
                     }} mt={5}>
 

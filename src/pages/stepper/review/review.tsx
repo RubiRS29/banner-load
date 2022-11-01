@@ -60,26 +60,24 @@ export default function Review() {
 
   const files = [...formDataBanner.getAll("files")];
 
-  const image = files.filter(file => {
+  const image = files.find(file => {
     file = file as File;
-    return getExt(file.name) == "jpg" || "png" ? file : "";
+    return getExt(file.name) == "jpg" || getExt(file.name) == "png" ? file : "";
   })
-
   
-  let fileBase: string | ArrayBuffer | null = "";
-  let reader = new FileReader();
+  // let fileBase: string | ArrayBuffer | null = "";
+  // let reader = new FileReader();
 
-  reader.readAsDataURL(image[0] as File);
+  // reader.readAsDataURL(image as File);
 
-  reader.onload = function () {
-    fileBase = reader.result;
-    seImage(fileBase as string)
+  // reader.onload = function () {
+  //   fileBase = reader.result;
+  //   seImage(fileBase as string)
+  // };
 
-  };
-
-  reader.onerror = function (error) {
-    console.log('Error: ', error);
-  };
+  // reader.onerror = function (error) {
+  //   console.log('Error: ', error);
+  // };
 
 
   return (

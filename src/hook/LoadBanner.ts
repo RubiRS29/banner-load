@@ -6,10 +6,11 @@ export const LoadBanner = () => {
 
     const { bannerState, loadBanner } = useContext( StepperContext );
 
-    const { formData } = bannerState;
+    const { formData, notIncludes } = bannerState;
     
     return {
         formDataBanner: formData,
-        loadBanner
+        loadBanner, 
+        notIncludes
     }
 }

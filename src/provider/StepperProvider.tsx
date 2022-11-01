@@ -7,7 +7,7 @@ import StepperReducer from "../reducer/StepperReducer";
 const initialState = new LoadBannerModelState(
     new FormData(),
     "pending", 
-    ""
+    []
 );
 
 export const StepperProvider = ({ children }: any) => {
