@@ -21,8 +21,7 @@ const steps = [
 export const StepsMain = () => {
 
     const { formDataBanner, notIncludes } = LoadBanner();
-    const fieldsName =  ["mode", "date", "position", "country", "files"]
-    const [fieldsNum, setFieldsNum] = React.useState(0);
+    const fieldsName = ["mode", "date", "position", "country", "files"]
     const { nextStep, prevStep, reset, activeStep } = useSteps({
         initialStep: 0,
     })
@@ -38,20 +37,22 @@ export const StepsMain = () => {
         const fieldsKeys = [...formDataBanner.keys()];
         const notIncludesFields = fieldsName.filter(element => !fieldsKeys.includes(element));
 
-        setFieldsNum(notIncludes.length);
+        if (notIncludes.length == 5) {
+            return nextStep();
+            
+        } else {
+            return toast({
+                title: 'Error, fields are missing',
+                description: `Some fields are missing ${notIncludesFields.toString()}`,
+                position: 'top-right',
+                status: 'error',
+                duration: 8000,
+                isClosable: true,
+            })
+        }
 
-        console.log(notIncludes.length);
-
-        return toast({
-            title: 'Error, fields are missing',
-            description: `Some fields are missing ${notIncludesFields.toString()}`,
-            position: 'top-right',
-            status: 'error',
-            duration: 8000,
-            isClosable: true,
-        })
     }
-    
+
     return (
 
         <Flex flexDir="column" width="100%">
@@ -104,8 +105,7 @@ export const StepsMain = () => {
                             {activeStep === steps.length - 1 ? "affff" : "Load"}
                         </Button>) :
 
-                        <Button size="sm" onClick={notIncludes.length !== 5 ? validateFields : nextStep}>
-                            {fieldsNum}
+                        <Button size="sm" onClick={validateFields}>
                             {activeStep === steps.length - 1 ? "Finish" : "Next"}
                         </Button>
                     }
