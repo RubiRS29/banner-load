@@ -65,20 +65,21 @@ export default function Review() {
     return getExt(file.name) == "jpg" || getExt(file.name) == "png" ? file : "";
   })
   
-  // let fileBase: string | ArrayBuffer | null = "";
-  // let reader = new FileReader();
+  let fileBase: string | ArrayBuffer | null = "";
+  let reader = new FileReader();
 
-  // reader.readAsDataURL(image as File);
+  reader.readAsDataURL(image as File);
 
-  // reader.onload = function () {
-  //   fileBase = reader.result;
-  //   seImage(fileBase as string)
-  // };
+  reader.onload = function () {
+    fileBase = reader.result;
+    seImage(fileBase as string)
+  };
 
-  // reader.onerror = function (error) {
-  //   console.log('Error: ', error);
-  // };
+  reader.onerror = function (error) {
+    console.log('Error: ', error);
+  };
 
+  
 
   return (
     <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} maxW={'7xl'} py={12} className="container-review">

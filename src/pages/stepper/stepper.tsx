@@ -1,15 +1,14 @@
 
 import { Flex, Heading, Button, Box, useToast } from '@chakra-ui/react';
 
-import { Step, Steps, useSteps } from "chakra-ui-steps"
+import { Step, Steps, useSteps } from "chakra-ui-steps";
 import { FiUser, FiClipboard, FiDollarSign } from 'react-icons/fi';
 import { Success } from './success/done-component';
 import { FormBanners } from './form/form';
 import Review from './review/review';
 import './Utils.css';
 import { LoadBanner } from '../../hook/LoadBanner';
-import { loadBannerApi } from './form/formApi'
-import React from 'react';
+import { loadBannerApi } from './form/formApi';
 
 
 const steps = [
@@ -30,6 +29,7 @@ export const StepsMain = () => {
 
     const load = async () => {
         await loadBannerApi(formDataBanner);
+        
     }
 
     const validateFields = () => {
@@ -38,10 +38,10 @@ export const StepsMain = () => {
         const notIncludesFields = fieldsName.filter(element => !fieldsKeys.includes(element));
 
         if (notIncludes.length == 5) {
-            return nextStep();
-            
+            nextStep();
+
         } else {
-            return toast({
+            toast({
                 title: 'Error, fields are missing',
                 description: `Some fields are missing ${notIncludesFields.toString()}`,
                 position: 'top-right',
