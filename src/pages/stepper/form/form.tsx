@@ -115,7 +115,7 @@ export const FormBanners = () => {
             filesLoad.forEach(file => {
                 formDataBanner.append("files", file)
             })
-            if(!notIncludes.includes("files")){
+            if (!notIncludes.includes("files")) {
                 notIncludes.push("files")
             }
         }
@@ -170,7 +170,10 @@ export const FormBanners = () => {
 
             setDate(date);
             formDataBanner.set("date", date)
-            notIncludes.push("date")
+            if (!notIncludes.includes("date")) {
+
+                notIncludes.push("date")
+            }
         }
 
     }
@@ -188,7 +191,10 @@ export const FormBanners = () => {
                     <FormLabel mb={5}>Position</FormLabel>
                     <ButtonRadio handleChange={(e: any) => {
                         formDataBanner.set("position", e);
-                        notIncludes.push("position")
+                        if (!notIncludes.includes("position")) {
+                            notIncludes.push("position")
+                        }
+                       
 
                     }} />
 
@@ -202,7 +208,9 @@ export const FormBanners = () => {
                         <Select placeholder='Select country' onChange={(e: any) => {
                             setCountry(e.target.value)
                             formDataBanner.set("country", e.target.value);
-                            notIncludes.push("country")
+                            if (!notIncludes.includes("country")) {
+                                notIncludes.push("country")
+                            }
                         }}>
 
                             {options.map(({ value, label }) => (
@@ -232,7 +240,9 @@ export const FormBanners = () => {
 
                         setValue(e)
                         formDataBanner.set("mode", e);
-                        notIncludes.push("mode")
+                        if (!notIncludes.includes("mode")) {
+                            notIncludes.push("mode")
+                        }
 
                     }} mt={5}>
 

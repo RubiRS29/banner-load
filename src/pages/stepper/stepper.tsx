@@ -22,7 +22,7 @@ export const StepsMain = () => {
 
     const { formDataBanner, notIncludes } = LoadBanner();
     const fieldsName =  ["mode", "date", "position", "country", "files"]
-    
+    const [fieldsNum, setFieldsNum] = React.useState(0);
     const { nextStep, prevStep, reset, activeStep } = useSteps({
         initialStep: 0,
     })
@@ -38,6 +38,8 @@ export const StepsMain = () => {
         const fieldsKeys = [...formDataBanner.keys()];
         const notIncludesFields = fieldsName.filter(element => !fieldsKeys.includes(element));
 
+        setFieldsNum(notIncludes.length);
+
         console.log(notIncludes.length);
 
         return toast({
@@ -49,8 +51,9 @@ export const StepsMain = () => {
             isClosable: true,
         })
     }
-
+    
     return (
+
         <Flex flexDir="column" width="100%">
 
             <Steps activeStep={activeStep}>
@@ -101,8 +104,8 @@ export const StepsMain = () => {
                             {activeStep === steps.length - 1 ? "affff" : "Load"}
                         </Button>) :
 
-                        <Button size="sm" onClick={notIncludes.length != 5 ? validateFields : nextStep}>
-                            {notIncludes.length}
+                        <Button size="sm" onClick={notIncludes.length !== 5 ? validateFields : nextStep}>
+                            {fieldsNum}
                             {activeStep === steps.length - 1 ? "Finish" : "Next"}
                         </Button>
                     }
