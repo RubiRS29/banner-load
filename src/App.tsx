@@ -15,6 +15,7 @@ import { StepsStyleConfig as Steps } from 'chakra-ui-steps';
 import { Route, BrowserRouter, Routes, useRoutes } from "react-router-dom"
 import { StepsMain } from "./pages/stepper/stepper"
 import { ScheduleCom } from "./pages/schedule/schedule"
+import { Calendar } from "./pages/schedule/calendar";
 
 const theme = extendTheme({
   components: {
@@ -49,7 +50,7 @@ export const App = () => {
           <Route  path="/" element={<MenuNav />} >
 
             <Route path="/" element={<StepsMain />} />
-            <Route path="/schedule" element={<ScheduleCom />} />
+            <Route path="/schedule" element={<Calendar />} />
           </Route>
         </Routes>
 

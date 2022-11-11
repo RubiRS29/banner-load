@@ -79,8 +79,7 @@ export default function Review() {
     console.log('Error: ', error);
   };
 
-  
-
+;
   return (
     <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} maxW={'7xl'} py={12} className="container-review">
       <Stack spacing={4}>

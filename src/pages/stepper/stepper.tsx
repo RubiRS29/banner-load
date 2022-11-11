@@ -1,5 +1,5 @@
 
-import { Flex, Heading, Button, Box, useToast } from '@chakra-ui/react';
+import { Flex, Heading, Button, Box, useToast, Alert, AlertDescription, AlertTitle, CircularProgress, CircularProgressLabel, AlertIcon } from '@chakra-ui/react';
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 import { FiUser, FiClipboard, FiDollarSign } from 'react-icons/fi';
@@ -9,6 +9,8 @@ import Review from './review/review';
 import './Utils.css';
 import { LoadBanner } from '../../hook/LoadBanner';
 import { loadBannerApi } from './form/formApi';
+import { Progress } from '../../componet/progress';
+import { useState } from 'react';
 
 
 const steps = [
@@ -28,7 +30,8 @@ export const StepsMain = () => {
 
 
     const load = async () => {
-        await loadBannerApi(formDataBanner);
+        const response = await loadBannerApi(formDataBanner);
+        console.log(response)
         
     }
 
@@ -50,13 +53,10 @@ export const StepsMain = () => {
                 isClosable: true,
             })
         }
-
     }
 
     return (
-
         <Flex flexDir="column" width="100%">
-
             <Steps activeStep={activeStep}>
 
                 {steps.map(({ label, icon, Content }) => (
@@ -102,6 +102,7 @@ export const StepsMain = () => {
 
                     {activeStep === 1 ?
                         (<Button size="sm" onClick={load}>
+
                             {activeStep === steps.length - 1 ? "affff" : "Load"}
                         </Button>) :
 
@@ -112,6 +113,8 @@ export const StepsMain = () => {
 
                 </Flex>
             )}
+
+            
         </Flex>
     )
 }
