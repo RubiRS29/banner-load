@@ -9,15 +9,20 @@ import { CalendarHook } from '../../hook/CalendarHook';
 import CalendarProvider from '../../provider/ContextProvider';
 import { getMonth, getMonthIndex } from '../../utils/utils';
 import { Calendar } from '../../models/CalendarModel';
+import { DayCalendarModel } from '../../models/DayCalendarModel';
+import { BannerModal } from './bannersModal';
+
+
+
 
 export const ScheduleCom = () => {
+
     const [currenMonth, setCurrentMonth] = useState(getMonth());
-    const [currentMonthName, setCurrentMonthName] = useState();
-    const { calendar, setCalendar } = CalendarHook();
+    const { calendar } = CalendarHook();
+
 
     useEffect(() => {
         setCurrentMonth(getMonth(calendar.monthIndex));
-        
     }, [calendar]);
 
 
@@ -29,15 +34,18 @@ export const ScheduleCom = () => {
     return (
 
         <Box>
-            <HeaderCalendar monthName={getNameFormat()} />
 
             <SimpleGrid minChildWidth='350px' spacing='40px'>
+
                 <Box >
+                    <HeaderCalendar monthName={getNameFormat()} />
                     <WeekCalendar month={currenMonth} />
                 </Box>
 
-                <Box bg='tomato' height='80px'>
-                    ufhsfduisfdh
+                <Box  height='80px'>
+                    <HeaderCalendar monthName={getNameFormat()} />
+                    <BannerModal />
+
                 </Box>
             </SimpleGrid>
 

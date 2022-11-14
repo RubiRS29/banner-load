@@ -1,9 +1,9 @@
-import { Box, Button, Center, GridItem, Heading, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, SimpleGrid, Tag, useDisclosure } from "@chakra-ui/react";
+import { Badge, Box, Button, Center, GridItem, Heading, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, SimpleGrid, Tag, useDisclosure } from "@chakra-ui/react";
 import { FaCircle } from "react-icons/fa";
 import { DayCalendarModel } from "../../models/DayCalendarModel";
 import './calendar.css'
 
-export const Day = ({ day, rowIdx, isActive }: any, info: DayCalendarModel) => {
+export const Day = ({ day, rowIdx, isActive, info }: any) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -19,6 +19,8 @@ export const Day = ({ day, rowIdx, isActive }: any, info: DayCalendarModel) => {
 
     };
 
+    console.log(info);
+
     return (
 
         <GridItem w='100%'
@@ -31,23 +33,24 @@ export const Day = ({ day, rowIdx, isActive }: any, info: DayCalendarModel) => {
             fontSize='xs'
             cursor='pointer'
             onClick={onOpen}
-            >
+            key={rowIdx}
+        >
 
             <Center mb={1}>
                 <Heading fontSize='xs'>{day.format("DD")}</Heading>
-                {/* {day.format("DD MMMM YYYY")} */}
+                {/* {day.format("DD MMMM YYYY")}  */}
+                
             </Center>
 
-            {isActive == true ? <FaCircle color='red.500' /> : ""}
+            {isActive == true ? <Badge ml='1' colorScheme='green'>DYI</Badge> : ""}
 
-
-            <Modal isOpen={isOpen} onClose={onClose}>
+            <Modal isOpen={isActive == true ? isOpen : false} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader> Banner To Release {info.date}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        holaaa
+                        {info}
                     </ModalBody>
 
                     <ModalFooter>

@@ -43,17 +43,15 @@ export const HeaderCalendar = ({ monthName }: any) => {
                 prev
             </IconButton>
 
-            <Flex
-                mt='1'
+            <Center 
                 fontWeight='semibold'
                 as='h4'
                 lineHeight='tight'
-                noOfLines={1}
             >
-                <Center >
-                    {monthName}
-                </Center>
-            </Flex>
+
+                {monthName}
+
+            </Center>
 
             <IconButton
                 onClick={handleNextMonth}
