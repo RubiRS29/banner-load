@@ -7,19 +7,13 @@ import { WeekCalendar } from "./weekCalendar";
 export const BannerModal = () => {
 
     return (
+        <SimpleGrid minChildWidth='350px' spacing='10px' mt={4} >
 
-        <Box>
+            <Banner />
+            <Banner />
 
-            <SimpleGrid minChildWidth='350px' spacing='40px'>
+        </SimpleGrid>
 
-
-                <Box height='80px'>
-                    <Banner />
-
-                </Box>
-            </SimpleGrid>
-
-        </Box>
     )
 
 };

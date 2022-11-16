@@ -11,6 +11,7 @@ import { getMonth, getMonthIndex } from '../../utils/utils';
 import { Calendar } from '../../models/CalendarModel';
 import { DayCalendarModel } from '../../models/DayCalendarModel';
 import { BannerModal } from './bannersModal';
+import { FilterBanner } from './FilterBanner';
 
 
 
@@ -42,9 +43,10 @@ export const ScheduleCom = () => {
                     <WeekCalendar month={currenMonth} />
                 </Box>
 
-                <Box  height='80px'>
-                    <HeaderCalendar monthName={getNameFormat()} />
-                    <BannerModal />
+                <Box  >
+                    <FilterBanner />
+                    
+                    <BannerModal  />
 
                 </Box>
             </SimpleGrid>

@@ -1,28 +1,31 @@
-import { Badge, Box, Button, Center, GridItem, Heading, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, SimpleGrid, Tag, useDisclosure } from "@chakra-ui/react";
+import { Badge, Box, Button, Center, Flex, GridItem, Heading, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, position, SimpleGrid, Tag, useDisclosure } from "@chakra-ui/react";
 import { FaCircle } from "react-icons/fa";
 import { DayCalendarModel } from "../../models/DayCalendarModel";
+import { Banner } from "./Banner";
 import './calendar.css'
 
 export const Day = ({ day, rowIdx, isActive, info }: any) => {
-
     const { isOpen, onOpen, onClose } = useDisclosure()
+    var dayCalendar:any = [];
 
-    function checkedNumber(e: any) {
+    // function checkedNumber(e: any) {
 
-        let number = e.target;
-        let numChecked = document.querySelector('.checked-number');
+    //     let number = e.target;
+    //     let numChecked = document.querySelector('.checked-number');
 
-        if (numChecked) {
-            numChecked.classList.remove('checked-number')
-        }
-        number.classList.add("checked-number");
+    //     if (numChecked) {
+    //         numChecked.classList.remove('checked-number')
+    //     }
+    //     number.classList.add("checked-number");
 
-    };
+    // };
 
-    console.log(info);
+    if (info.length > 0) {
+        dayCalendar = info;
+        console.log(dayCalendar)
+    }
 
     return (
-
         <GridItem w='100%'
             h='85'
             p={2}
@@ -39,29 +42,26 @@ export const Day = ({ day, rowIdx, isActive, info }: any) => {
             <Center mb={1}>
                 <Heading fontSize='xs'>{day.format("DD")}</Heading>
                 {/* {day.format("DD MMMM YYYY")}  */}
-                
+
             </Center>
 
-            {isActive == true ? <Badge ml='1' colorScheme='green'>DYI</Badge> : ""}
+            {info.length > 0 ? <Flex borderRadius='full' w={6} h={6} bg={'green.100'} align={'center'} justify={'center'} fontSize='.9em' >{dayCalendar.length}</Flex> : ""}
 
-            <Modal isOpen={isActive == true ? isOpen : false} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader> Banner To Release {info.date}</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                        {info}
-                    </ModalBody>
+            {info.length > 0 ?
 
-                    <ModalFooter>
-                        <Button colorScheme='blue' mr={3} onClick={onClose}>
-                            Close
-                        </Button>
-                        <Button variant='ghost'>Secondary Action</Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
+                <Modal isOpen={isOpen} onClose={onClose} size={'lg'} >
+                    <ModalOverlay />
+                    <ModalContent p={3}>
+                        {dayCalendar.map((day: any) => (
+                            <Banner date={day.date} mode={day.mode} language={day.language} position={day.position} />
+                        ))}
 
+                    </ModalContent>
+
+                    
+                </Modal>
+
+                : ""}
 
 
 

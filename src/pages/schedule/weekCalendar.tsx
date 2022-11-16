@@ -12,20 +12,55 @@ export const WeekCalendar = ({ month }: any) => {
                 'date': '09 November 2022',
                 'position': "bottom",
                 'mode': "DIY",
-                'country': "es_MX"
+                'language': "es_MX"
             },
+
             {
                 'date': '10 November 2022',
                 'position': "bottom",
                 'mode': "DIY",
-                'country': "es_MX"
+                'language': "es_MX"
+            },
+
+            {
+                'date': '10 November 2022',
+                'position': "bottom",
+                'mode': "DIY",
+                'language': "es_MX"
+            },
+
+            {
+                'date': '30 November 2022',
+                'position': "bottom",
+                'mode': "DIY",
+                'language': "es_MX"
+            }
+
+            , {
+                'date': '22 November 2022',
+                'position': "bottom",
+                'mode': "DIY",
+                'language': "es_MX"
             }
         ]
 
     };
 
-    const dayCalendar = new DayCalendarModel(
-        '09 November 2022',"bottom","DIY","es_MX")
+
+    const filterDates = (date: string) => {
+
+        return calendarData.daysCalendar.filter((bannerDay) => bannerDay.date == date);
+    }
+
+    const dayCalendar = {
+
+        'date': '09 November 2022',
+        'position': "bottom",
+        'mode': "DIY",
+        'language': "es_MX"
+
+    }
+
 
     const date = '10 November 2022';
 
@@ -47,12 +82,14 @@ export const WeekCalendar = ({ month }: any) => {
 
                         row.map((day: any, idx: any) => (
 
-                            day.format("DD MMMM YYYY") == date ? (
+                            <Day
+                                day={day}
+                                key={idx}
+                                rowIdx={i}
+                                info={filterDates(day.format("DD MMMM YYYY")) ? filterDates(day.format("DD MMMM YYYY")) : []} 
+                                // isActive={filterDates(day.format("DD MMMM YYYY")) ? true : false}
+                            />
 
-                                <Day day={day} key={idx} rowIdx={i} isActive info={dayCalendar} />
-                            ) : (
-                                <Day day={day} key={idx} rowIdx={i} info={[]} /> 
-                            )
                         ))
 
                     ))

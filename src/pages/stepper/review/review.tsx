@@ -1,5 +1,4 @@
 import {
-  Container,
   SimpleGrid,
   Image,
   Flex,
@@ -12,46 +11,19 @@ import {
   Box,
   VStack,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-import { ReactElement } from 'react';
 import { FiAlignCenter, FiCalendar, FiGrid, FiTag } from 'react-icons/fi';
+import { Feature } from '../../../componet/Feature';
 import { LoadBanner } from '../../../hook/LoadBanner';
-import { getExt } from '../../../utils/utils';
-
-interface FeatureProps {
-  field: string;
-  iconBg: string;
-  icon?: ReactElement;
-  text: string;
-}
-
-const Feature = ({ field, icon, iconBg, text }: FeatureProps) => {
-  return (
-    <Stack direction={'row'} align={'center'}>
-      <Flex
-        w={8}
-        h={8}
-        align={'center'}
-        justify={'center'}
-        rounded={'full'}
-        bg={iconBg}>
-        {icon}
-      </Flex>
-      <Text fontWeight={700}>{field} </Text>
-      <Text as='samp'> {text} </Text>
-    </Stack>
-  );
-};
-
-
+import { getExt, imageToBase64} from '../../../utils/utils';
 
 
 export default function Review() {
 
   const { formDataBanner } = LoadBanner();
 
-  const [img, seImage] = React.useState('');
+  const [img, seImage] = useState('');
 
   let position = formDataBanner.get('position')?.toString() || '';
   let country = formDataBanner.get('country')?.toString() || '';
@@ -64,22 +36,9 @@ export default function Review() {
     file = file as File;
     return getExt(file.name) == "jpg" || getExt(file.name) == "png" ? file : "";
   })
-  
-  let fileBase: string | ArrayBuffer | null = "";
-  let reader = new FileReader();
 
-  reader.readAsDataURL(image as File);
+  imageToBase64(image).then((imgBase:any) => seImage(imgBase));
 
-  reader.onload = function () {
-    fileBase = reader.result;
-    seImage(fileBase as string)
-  };
-
-  reader.onerror = function (error) {
-    console.log('Error: ', error);
-  };
-
-;
   return (
     <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} maxW={'7xl'} py={12} className="container-review">
       <Stack spacing={4}>
@@ -154,7 +113,7 @@ export default function Review() {
         </Box>
 
         <Box >
-          
+
         </Box>
 
       </VStack>
