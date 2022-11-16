@@ -1,8 +1,8 @@
 import { Stack, Heading, Divider, ButtonGroup, Button, Card, CardBody, CardFooter, Image, Text, Icon, position, useColorModeValue, Flex, SimpleGrid } from "@chakra-ui/react";
 import { useState } from "react";
 import { FiAlignCenter, FiGrid, FiTag } from "react-icons/fi";
-import { Feature } from "../../componet/Feature";
-import { imageToBase64 } from "../../utils/utils";
+import { Feature } from "../../../componet/Feature";
+import { imageToBase64 } from "../../../utils/utils";
 
 
 export const Banner = ({ date, position, mode, language }: any) => {

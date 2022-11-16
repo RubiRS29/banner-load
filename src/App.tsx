@@ -15,7 +15,7 @@ import { StepsStyleConfig as Steps } from 'chakra-ui-steps';
 import { Route, BrowserRouter, Routes, useRoutes } from "react-router-dom"
 import { StepsMain } from "./pages/stepper/stepper"
 import { ScheduleCom } from "./pages/schedule/schedule"
-import { Calendar } from "./pages/schedule/calendar";
+import { Calendar } from "./pages/schedule/calendar/calendar";
 
 const theme = extendTheme({
   components: {

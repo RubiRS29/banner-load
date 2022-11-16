@@ -7,58 +7,82 @@ export const WeekCalendar = ({ month }: any) => {
 
         daysCalendar: [
             {
+                'id' : '1',
                 'date': '09 November 2022',
                 'position': "bottom",
-                'mode': "DIY",
+                'mode': "DYI",
                 'language': "es_MX"
             },
-
+    
             {
+                'id' : '2',
                 'date': '10 November 2022',
                 'position': "bottom",
-                'mode': "DIY",
+                'mode': "CUSTOMER",
                 'language': "es_MX"
             },
-
+    
             {
+                'id' : '3',
                 'date': '10 November 2022',
                 'position': "bottom",
-                'mode': "DIY",
+                'mode': "DYI",
                 'language': "es_MX"
             },
-
+    
             {
+                'id' : '4',
                 'date': '30 November 2022',
                 'position': "bottom",
-                'mode': "DIY",
+                'mode': "DYI",
                 'language': "es_MX"
             }
-
-            , {
+    
+            , 
+            {
+                'id' : '5',
                 'date': '22 November 2022',
                 'position': "bottom",
-                'mode': "DIY",
+                'mode': "CUSTOMER",
+                'language': "es_MX"
+            },
+            {
+                'id' : '6',
+                'date': '22 November 2022',
+                'position': "bottom",
+                'mode': "CUSTOMER",
+                'language': "es_MX"
+            }
+            ,
+            {
+                'id' : '7',
+                'date': '30 Dicember 2022',
+                'position': "bottom",
+                'mode': "DYI",
+                'language': "es_MX"
+            }
+    
+            , 
+            {
+                'id' : '8',
+                'date': '29 July 2022',
+                'position': "bottom",
+                'mode': "CUSTOMER",
+                'language': "es_MX"
+            },
+            {
+                'id' : '9',
+                'date': '29 July 2022',
+                'position': "bottom",
+                'mode': "CUSTOMER",
                 'language': "es_MX"
             }
         ]
-
     };
 
-
     const filterDates = (date: string) => {
-
         return calendarData.daysCalendar.filter((bannerDay) => bannerDay.date == date);
     }
-
-    const dayCalendar = {
-
-        'date': '09 November 2022',
-        'position': "bottom",
-        'mode': "DIY",
-        'language': "es_MX"
-
-    }
-
 
     const date = '10 November 2022';
 
@@ -81,6 +105,7 @@ export const WeekCalendar = ({ month }: any) => {
                         row.map((day: any, idx: any) => (
 
                             <Day
+                            
                                 day={day}
                                 key={idx}
                                 rowIdx={i}

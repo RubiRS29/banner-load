@@ -1,5 +1,5 @@
 import { Center, Flex, GridItem, Heading, Modal, ModalContent, ModalOverlay, useDisclosure } from "@chakra-ui/react";
-import { Banner } from "./Banner";
+import { Banner } from "../banner/Banner";
 import './calendar.css'
 
 export const Day = ({ day, rowIdx, isActive, info }: any) => {
@@ -50,7 +50,13 @@ export const Day = ({ day, rowIdx, isActive, info }: any) => {
                     <ModalOverlay />
                     <ModalContent p={3}>
                         {dayCalendar.map((day: any) => (
-                            <Banner date={day.date} mode={day.mode} language={day.language} position={day.position} />
+                            <Banner 
+                                date={day.date} 
+                                mode={day.mode} 
+                                language={day.language} 
+                                position={day.position} 
+                                key={day.id}
+                            />
                         ))}
 
                     </ModalContent>

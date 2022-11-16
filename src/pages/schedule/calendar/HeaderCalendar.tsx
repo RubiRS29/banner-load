@@ -2,8 +2,8 @@ import { EmailIcon } from "@chakra-ui/icons";
 import { Box, Button, Center, Flex, IconButton, Stack } from "@chakra-ui/react"
 import dayjs from "dayjs";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import { CalendarHook } from "../../hook/CalendarHook";
-import { getMonth, getMonthIndex } from "../../utils/utils";
+import { CalendarHook } from "../../../hook/CalendarHook";
+import { getMonth, getMonthIndex } from "../../../utils/utils";
 
 
 export const HeaderCalendar = ({ monthName }: any) => {
@@ -21,6 +21,7 @@ export const HeaderCalendar = ({ monthName }: any) => {
     function handleReset() {
         setMonthIndex(getMonthIndex());
     }
+
 
     return (
 
@@ -48,9 +49,7 @@ export const HeaderCalendar = ({ monthName }: any) => {
                 as='h4'
                 lineHeight='tight'
             >
-
                 {monthName}
-
             </Center>
 
             <IconButton
@@ -62,8 +61,6 @@ export const HeaderCalendar = ({ monthName }: any) => {
                 next
             </IconButton>
         </Stack>
-
-
 
     )
 }

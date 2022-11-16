@@ -1,8 +1,8 @@
 import { SimpleGrid, Box, Alert, AlertDescription, AlertIcon, AlertTitle } from "@chakra-ui/react";
 import { Banner } from "./Banner";
-import { HeaderCalendar } from "./HeaderCalendar";
-import { WeekCalendar } from "./weekCalendar";
-import { BannerDataHook } from "../../hook/BannerDataHook";
+import { HeaderCalendar } from "../calendar/HeaderCalendar";
+import { WeekCalendar } from "../calendar/weekCalendar";
+import { BannerDataHook } from "../../../hook/BannerDataHook";
 
 
 export const BannerCard = () => {

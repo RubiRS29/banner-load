@@ -1,7 +1,7 @@
 
 import { Box } from "@chakra-ui/react"
-import { ScheduleCom } from "./schedule"
-import CalendarProvider from "../../provider/CalendarProvider"
+import { ScheduleCom } from "../schedule"
+import CalendarProvider from "../../../provider/CalendarProvider"
 
 export const Calendar = () => {
 
