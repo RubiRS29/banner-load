@@ -1,18 +1,15 @@
 
-import { Flex, Heading, Button, Box, useColorModeValue, Divider, SimpleGrid, Stack } from '@chakra-ui/react';
+import { Box, SimpleGrid } from '@chakra-ui/react';
 import dayjs from 'dayjs';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import 'react-calendar/dist/Calendar.css';
 import { HeaderCalendar } from './HeaderCalendar';
 import { WeekCalendar } from './weekCalendar';
 import { CalendarHook } from '../../hook/CalendarHook';
-import CalendarProvider from '../../provider/ContextProvider';
-import { getMonth, getMonthIndex } from '../../utils/utils';
-import { Calendar } from '../../models/CalendarModel';
-import { DayCalendarModel } from '../../models/DayCalendarModel';
-import { BannerModal } from './bannersModal';
+import { getMonth } from '../../utils/utils';
 import { FilterBanner } from './FilterBanner';
-
+import BannerDataProvider from '../../provider/BannerDataProvider';
+import { BannerCard } from './BannerCard';
 
 
 
@@ -31,7 +28,6 @@ export const ScheduleCom = () => {
         return dayjs(new Date(dayjs().year(), calendar.monthIndex)).format("MMMM YYYY");
     }
 
-
     return (
 
         <Box>
@@ -43,12 +39,16 @@ export const ScheduleCom = () => {
                     <WeekCalendar month={currenMonth} />
                 </Box>
 
-                <Box  >
-                    <FilterBanner />
-                    
-                    <BannerModal  />
+                <BannerDataProvider>
 
-                </Box>
+                    <Box >
+                        <FilterBanner />
+
+                        <BannerCard />
+
+                    </Box>
+                </BannerDataProvider>
+
             </SimpleGrid>
 
         </Box>

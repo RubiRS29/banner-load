@@ -1,20 +1,20 @@
-import { Stack, Heading, Divider, ButtonGroup, Button, Card, CardBody, CardFooter, Image, Text, Icon, position, useColorModeValue, Flex } from "@chakra-ui/react";
+import { Stack, Heading, Divider, ButtonGroup, Button, Card, CardBody, CardFooter, Image, Text, Icon, position, useColorModeValue, Flex, SimpleGrid } from "@chakra-ui/react";
 import { useState } from "react";
 import { FiAlignCenter, FiGrid, FiTag } from "react-icons/fi";
 import { Feature } from "../../componet/Feature";
 import { imageToBase64 } from "../../utils/utils";
 
 
-export const Banner = ({date, position, mode, language}:any) => {
+export const Banner = ({ date, position, mode, language }: any) => {
 
-    
+
     return (
         <Card borderRadius='lg' variant={'outline'} size={'sm'} m={1}>
             <CardBody >
                 <Stack spacing='3'>
                     <Heading size='sm'>Date of Release {date} </Heading>
 
-                    <Flex gap='3'>
+                    <SimpleGrid minChildWidth='120px' spacing='40px' gap='2'>
 
                         <Feature
                             icon={
@@ -43,18 +43,17 @@ export const Banner = ({date, position, mode, language}:any) => {
                             text={language}
                         />
 
-                    </Flex>
+                    </SimpleGrid>
 
 
                 </Stack>
             </CardBody>
             <Divider />
             <CardFooter>
-                <ButtonGroup spacing='2'>
-                    <Button variant='solid' colorScheme='blue'>
-                        Go to Phase
-                    </Button>
-                </ButtonGroup>
+                <Button variant='solid' colorScheme='blue' size='xs'>
+                    Go to Phase
+                </Button>
+
             </CardFooter>
         </Card>
     )

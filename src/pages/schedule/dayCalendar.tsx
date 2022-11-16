@@ -1,6 +1,4 @@
-import { Badge, Box, Button, Center, Flex, GridItem, Heading, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, position, SimpleGrid, Tag, useDisclosure } from "@chakra-ui/react";
-import { FaCircle } from "react-icons/fa";
-import { DayCalendarModel } from "../../models/DayCalendarModel";
+import { Center, Flex, GridItem, Heading, Modal, ModalContent, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 import { Banner } from "./Banner";
 import './calendar.css'
 
@@ -22,7 +20,6 @@ export const Day = ({ day, rowIdx, isActive, info }: any) => {
 
     if (info.length > 0) {
         dayCalendar = info;
-        console.log(dayCalendar)
     }
 
     return (

@@ -1,6 +1,4 @@
 import { Box, Grid } from "@chakra-ui/react";
-import React, { } from "react";
-import { DayCalendarModel } from "../../models/DayCalendarModel";
 import { Day } from "./dayCalendar";
 
 export const WeekCalendar = ({ month }: any) => {
