@@ -1,10 +1,15 @@
 pipeline {
-    agent { label 'master' }
+    agent any
     stages {
-        stage('build') {
+        stage('Example') {
             steps {
-                echo "Hello World!"
+                echo 'Hello World'
             }
+        }
+    }
+    post { 
+        always { 
+            echo 'I will always say Hello again!'
         }
     }
 }
